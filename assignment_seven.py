@@ -8,29 +8,57 @@ def key():
     return user_key
 
 
+def user_encode():
+    while True:
+        question = input("press e to encode, press d to decode, press q to quit.")
+        if question == "e":
+            return
+        elif question == "d":
+            pass
+        else:
+            break
+    return question
+
+
 def user_phrase():
     phrase = input("please type in the phrase you want to encode")
+    phrase.lower()
+    phrase = phrase.replace(" ", "")
     return phrase
 
-def encode(phrase, alphabet, user_key):
-    for user_key in phrase:
-        alphabet.index(user_key)
-        del alphabet[user_key]
+
+def new_alphabet(alphabet, user_key):
+    first = alphabet[:user_key]
+    last = alphabet[user_key:]
+    nw_alphabet = last + first
+    return nw_alphabet
 
 
-
-def alphabet(alphabet):
-    first = alphabet[::1]
-    last = alphabet[::-1]
-    new = first + last
-    return new
+def encode(phrase, nw_alphabet):
+    new_phrase = ""
+    for letter in phrase:
+        if letter == " ":
+            new_phrase = new_phrase + letter
+        else:
+            index = nw_alphabet.index(letter)
+            new_letter = nw_alphabet[index]
+            new_phrase = phrase + new_letter
+    return new_phrase
 
 
 def main():
-    original_alphabet()
+    alphabet = original_alphabet()
+    user_phrase()
     user_key = key()
-    phrase = user_phrase()
-    print(phrase[::-1])
+    nw_alphabet = new_alphabet(alphabet, user_key)
+    question = input("press e to encode, press d to decode, press q to quit.")
+    if question == "e":
+        phrase = user_phrase()
+        encode(phrase, nw_alphabet)
+    elif question == "d":
+        pass
+    else:
+        pass
 
 
 main()
